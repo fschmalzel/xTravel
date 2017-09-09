@@ -9,6 +9,10 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		instance = this;
+		
+		//Registering commands
+		this.getCommand("openinv").setExecutor(new TestInventoryOpen());
+		
 	}
 	
 	@Override
@@ -16,7 +20,7 @@ public class Main extends JavaPlugin {
 		
 	}
 	
-	public Main getPlugin() {
+	public static Main getPlugin() {
 		return instance;
 	}
 	
