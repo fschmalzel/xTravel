@@ -5,15 +5,17 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class TestInventoryOpen implements CommandExecutor {
+public class InventoryOpen implements CommandExecutor {
 	
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		
 		if (sender instanceof Player) {
 			
 			Player player = (Player) sender;
+			
 			//DEBUG
 			player.sendMessage("Befehl ausgeführt!");
+			
 			
 			
 			
@@ -24,7 +26,7 @@ public class TestInventoryOpen implements CommandExecutor {
 			
 		}
 		
-		return false;
+		return true;
 	}
 	
 }
