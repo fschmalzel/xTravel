@@ -4,7 +4,7 @@
 	
 	<groupId>com.gmail.xlifehd</groupId>
 	<artifactId>xTravel</artifactId>
-	<version>0.3.3</version>
+	<version>0.3.4</version>
 	<packaging>jar</packaging>
 	
 	<name>xTravel</name>
