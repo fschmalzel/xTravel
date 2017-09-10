@@ -17,6 +17,9 @@ public class TestInventoryOpen implements CommandExecutor {
 			Player player = (Player) sender;
 			player.sendMessage("Befehl ausgeführt!"); //DEBUG
 			
+			//DEBUG
+			player.sendMessage("Befehl ausgeführt!");
+			
 			MySQLPlayerData Zeug = MySQLPlayerData.getPlayerData(player.getUniqueId());
 			ItemStack[] shipInventory = Zeug.getShipInventory();
 
@@ -27,13 +30,14 @@ public class TestInventoryOpen implements CommandExecutor {
 			
 			return true;
 			
+			
 		} else {
 			
 			sender.sendMessage("Du musst ein Spieler sein!");
 			
 		}
 		
-		return false;
+		return true;
 	}
 	
 }

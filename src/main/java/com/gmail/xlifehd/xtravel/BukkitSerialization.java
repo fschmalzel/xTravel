@@ -89,7 +89,7 @@ public class BukkitSerialization {
 		try {
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 			BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream);
-
+			
 			// Save the item
 			dataOutput.writeObject(item);
 			
