@@ -17,19 +17,13 @@ public class TestInventoryOpen implements CommandExecutor {
 			Player player = (Player) sender;
 			player.sendMessage("Befehl ausgeführt!"); //DEBUG
 			
-			//DEBUG
-			player.sendMessage("Befehl ausgeführt!");
+			MySQLPlayerData playerData = MySQLPlayerData.getPlayerData(player.getUniqueId());
+			ItemStack[] items = playerData.getShipInventory();
 			
-			MySQLPlayerData Zeug = MySQLPlayerData.getPlayerData(player.getUniqueId());
-			ItemStack[] shipInventory = Zeug.getShipInventory();
-
-			Inventory Lager = Bukkit.createInventory(null, 27, "Schiffslager");
-			Lager.setStorageContents(shipInventory);
+			Inventory inventory = Bukkit.createInventory(null, 54, "Schiffslager");
+			inventory.setStorageContents(items);
 			
-			player.openInventory(Lager);
-			
-			return true;
-			
+			player.openInventory(inventory);
 			
 		} else {
 			
