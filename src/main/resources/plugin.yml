@@ -1,6 +1,6 @@
 name: xTravel
 main: com.gmail.xlifehd.xtravel.Main
-version: 0.1.1
+version: 0.3.0
 commands:
   invopen:
     description: Opens an empty Inventory

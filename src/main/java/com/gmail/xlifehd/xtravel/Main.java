@@ -14,9 +14,9 @@ public class Main extends JavaPlugin {
 	private static Main instance;
 	private static HikariDataSource hikari;
 	
-	
 	@Override
 	public void onEnable() {
+		
 		instance = this;
 		
 		setupConfig();
@@ -29,6 +29,8 @@ public class Main extends JavaPlugin {
 	
 	@Override
 	public void onDisable() {
+		
+		hikari.close();
 		
 	}
 	
@@ -62,10 +64,9 @@ public class Main extends JavaPlugin {
 		String database	= config.getString("mysql.database");
 		String username	= config.getString("mysql.username");
 		String password	= config.getString("mysql.password");
-		String prefix	= config.getString("mysql.prefix");
 		
 		HikariConfig dsConfig = new HikariConfig();
-		dsConfig.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + prefix + database);
+		dsConfig.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + database);
 		dsConfig.setUsername(username);
 		dsConfig.setPassword(password);
 		dsConfig.addDataSourceProperty("cachePrepStmts", "true");
@@ -73,6 +74,8 @@ public class Main extends JavaPlugin {
 		dsConfig.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
 		
 		hikari = new HikariDataSource(dsConfig);
+		
+		MySQLPlayerData.createTables();
 		
 	}
 	
