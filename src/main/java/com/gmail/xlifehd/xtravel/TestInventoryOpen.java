@@ -12,11 +12,8 @@ public class TestInventoryOpen implements CommandExecutor {
 		if (sender instanceof Player) {
 			
 			Player player = (Player) sender;
-			
 			//DEBUG
 			player.sendMessage("Befehl ausgeführt!");
-			
-			
 			
 			
 			
