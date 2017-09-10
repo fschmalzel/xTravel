@@ -24,7 +24,7 @@ public class Main extends JavaPlugin {
 		setupMySQL();
 		
 		//Registering commands
-		this.getCommand("openinv").setExecutor(new InventoryOpen());
+		this.getCommand("invopen").setExecutor(new TestInventoryOpen());
 		
 		//Registering listeners
 		this.getServer().getPluginManager().registerEvents(new OnQuit(), this);
