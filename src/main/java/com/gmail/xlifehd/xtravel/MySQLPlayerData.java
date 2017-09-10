@@ -27,7 +27,7 @@ public class MySQLPlayerData {
 	
 	private static String SELECT = "SELECT * FROM `" + Main.getPlugin().getConfig().getString("mysql.prefix") + "xTravel` WHERE uuid = ?";
 	
-	private static String UPDATE = "INSERT INTO `" + Main.getPlugin().getConfig().getString("mysql.prefix") + "` "
+	private static String UPDATE = "INSERT INTO `" + Main.getPlugin().getConfig().getString("mysql.prefix") + "xTravel` "
 			+ "(uuid, x, z, lvl, exp, cargoupgrades, speedupgrades, crew, shipinventory) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE "
 			+ "x = VALUES(x), z = VALUES(z), lvl = VALUES(lvl), exp = VALUES(exp), cargoupgrades = VALUES(cargoupgrades), "
@@ -73,7 +73,7 @@ public class MySQLPlayerData {
 	}
 	
 	/**
-	 * If the {@link MySQLPlayerData} object is no longer needed it should be closed, to free up space.
+	 * If the {@link MySQLPlayerData} object is no longer needed it should be closed, to free up resources.
 	 * 
 	 * @param uuid from the player.
 	 */

@@ -70,7 +70,7 @@ public class Main extends JavaPlugin {
 		String password	= config.getString("mysql.password");
 		
 		HikariConfig dsConfig = new HikariConfig();
-		dsConfig.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + database);
+		dsConfig.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + database + "?useSSL=false");
 		dsConfig.setUsername(username);
 		dsConfig.setPassword(password);
 		dsConfig.addDataSourceProperty("cachePrepStmts", "true");
