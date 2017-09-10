@@ -34,16 +34,17 @@ public class MySQLPlayerData {
 			+ "speedupgrades = VALUES(speedupgrades), crew = VALUES(crew), shipinventory = VALUES(shipinventory);";
 	
 	final private UUID uuid;
-	private long x;
-	private long z;
-	private int lvl;
-	private double exp;
-	private int cargoUpgrades;
-	private int speedUpgrades;
+	private long x = 0;
+	private long z = 0;
+	private int lvl = 0;
+	private double exp = 0;
+	private int cargoUpgrades = 0;
+	private int speedUpgrades = 0;
 	//TODO Add crew
-	private ItemStack[] shipInventory;
+	private ItemStack[] shipInventory = new ItemStack[0];
 	
 	private boolean loaded = false;
+	private boolean autoCommit = true;
 	
 	private static HashMap<UUID, MySQLPlayerData> loadedPlayers = new HashMap<UUID, MySQLPlayerData>();
 	
@@ -52,6 +53,12 @@ public class MySQLPlayerData {
 		loadData();
 	}
 	
+	/**
+	 * Gets a {@link MySQLPlayerData} object from a specific player.
+	 * 
+	 * @param uuid from the player.
+	 * @return {@link MySQLPlayerData} of specified player.
+	 */
 	public static MySQLPlayerData getPlayerData(UUID uuid) {
 		
 		if (loadedPlayers.containsKey(uuid)) {
@@ -65,6 +72,11 @@ public class MySQLPlayerData {
 		
 	}
 	
+	/**
+	 * If the {@link MySQLPlayerData} object is no longer needed it should be closed, to free up space.
+	 * 
+	 * @param uuid from the player.
+	 */
 	public static void closePlayerData(UUID uuid) {
 		
 		if (loadedPlayers.containsKey(uuid)) {
@@ -73,6 +85,9 @@ public class MySQLPlayerData {
 		
 	}
 	
+	/**
+	 * This function should be called on startup to ensure that all tables exist in the database.
+	 */
 	public static void createTables() {
 		
 		Runnable r = new Runnable() {
@@ -130,9 +145,9 @@ public class MySQLPlayerData {
 						//crew = BukkitSerialization.
 						shipInventory = BukkitSerialization.itemStackArrayFromBase64(shipInv);
 						
-						loaded = true;
-						
 					}
+					
+					loaded = true;
 					
 					preparedStatement.close();
 					
@@ -150,6 +165,9 @@ public class MySQLPlayerData {
 		
 	}
 	
+	/**
+	 * Updates the databases records. Should only be called if autoCommit has been disabled.
+	 */
 	public void updateData() {
 		
 		Runnable r = new Runnable() {
@@ -189,63 +207,160 @@ public class MySQLPlayerData {
 		
 	}
 	
+	private void autoCommit() {
+		if (autoCommit) {
+			updateData();
+		}
+	}
+	
 	//GETTER & SETTER
+	/**
+	 * Disable or enable autoCommit. By the default it is enabled.
+	 * 
+	 * @param autoCommit true = enabled; false = disabled.
+	 */
+	public void setAutoCommit(boolean autoCommit) {
+		this.autoCommit = autoCommit;
+	}
+	
+	/**
+	 * Returns the x coordinate of the ship.
+	 * 
+	 * @return X coordinate of the ship.
+	 */
 	public long getX() {
 		return x;
 	}
 	
+	/**
+	 * Sets the x coordinate.
+	 * 
+	 * @param x The new x coordinate.
+	 */
 	public void setX(long x) {
 		this.x = x;
+		autoCommit();
 	}
 	
+	/**
+	 * Returns the z coordinate of the ship.
+	 * 
+	 * @return Z coordinate of the ship.
+	 */
 	public long getZ() {
 		return z;
 	}
 	
+	/**
+	 * Sets the z coordinate.
+	 * 
+	 * @param z The new z coordinate.
+	 */
 	public void setZ(long z) {
 		this.z = z;
+		autoCommit();
 	}
 	
+	/**
+	 * Returns the level of the ship.
+	 * 
+	 * @return Level of the ship.
+	 */
 	public int getLvl() {
 		return lvl;
 	}
 	
+	/**
+	 * Sets the level of the ship.
+	 * 
+	 * @param lvl The new level of the ship.
+	 */
 	public void setLvl(int lvl) {
 		this.lvl = lvl;
+		autoCommit();
 	}
 	
+	/**
+	 * Returns the experience of the ship.
+	 * 
+	 * @return experience of the ship.
+	 */
 	public double getExp() {
 		return exp;
 	}
 	
+	/**
+	 * Sets the experience of the ship.
+	 * 
+	 * @param exp The new experience of the ship.
+	 */
 	public void setExp(double exp) {
 		this.exp = exp;
+		autoCommit();
 	}
 	
+	/**
+	 * Returns the level of cargo upgrades of the ship.
+	 * 
+	 * @return level of cargo upgrades the ship.
+	 */
 	public int getCargoUpgrades() {
 		return cargoUpgrades;
 	}
 	
+	/**
+	 * Sets the level of cargo upgrades of the ship.
+	 * 
+	 * @param cargoUpgrades The new level of cargo upgrades of the ship.
+	 */
 	public void setCargoUpgrades(int cargoUpgrades) {
 		this.cargoUpgrades = cargoUpgrades;
+		autoCommit();
 	}
 	
+	/**
+	 * Returns the level of speed upgrades of the ship.
+	 * 
+	 * @return level of speed upgrades the ship.
+	 */
 	public int getSpeedUpgrades() {
 		return speedUpgrades;
 	}
 	
+	/**
+	 * Sets the level of speed upgrades of the ship.
+	 * 
+	 * @param speedUpgrades The new level of speed upgrades of the ship.
+	 */
 	public void setSpeedUpgrades(int speedUpgrades) {
 		this.speedUpgrades = speedUpgrades;
+		autoCommit();
 	}
 	
+	/**
+	 * Returns an array of {@link ItemStack}s which represent the ships inventory.
+	 * 
+	 * @return ItemStack array of the ships inventory.
+	 */
 	public ItemStack[] getShipInventory() {
 		return shipInventory;
 	}
 	
+	/**
+	 * Sets the inventory of the ship.
+	 * 
+	 * @param shipInventory The new shipInventory as an array of {@link ItemStack}s.
+	 */
 	public void setShipInventory(ItemStack[] shipInventory) {
 		this.shipInventory = shipInventory;
+		autoCommit();
 	}
-	
+
+	/**
+	 * Should be called before getting any data
+	 * 
+	 * @return True if the data has been loaded.
+	 */
 	public boolean isLoaded() {
 		return loaded;
 	}
