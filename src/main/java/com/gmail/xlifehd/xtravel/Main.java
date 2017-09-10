@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.gmail.xlifehd.xtravel.listener.OnQuit;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -24,6 +25,9 @@ public class Main extends JavaPlugin {
 		
 		//Registering commands
 		this.getCommand("openinv").setExecutor(new TestInventoryOpen());
+		
+		//Registering listeners
+		this.getServer().getPluginManager().registerEvents(new OnQuit(), this);
 		
 	}
 	
